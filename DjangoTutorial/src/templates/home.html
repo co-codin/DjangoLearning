@@ -1,4 +1,8 @@
-<h1>Hello</h1>
-{{ request.user }}
-{{ request.user.is_authenticated }}
-<p>hello page</p>
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Hello</h1>
+    {{ request.user }}
+    {{ request.user.is_authenticated }}
+    <p>hello page</p>
+{% endblock %}
