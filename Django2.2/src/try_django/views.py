@@ -9,7 +9,7 @@ def about_page(request):
     return render(request, "about.html", {"title": "About"})
 
 def contact_page(request):
-    return HttpResponse('<h1>contact</h1>')
+    return render(request, "form.html", { 'title': "Contact Us" })
 
 def example_page(request):
     context = {"title": "Example"}

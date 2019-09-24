@@ -21,7 +21,7 @@ def blog_post_create_view(request):
 def blog_post_detail_view(request, slug):
     # 1 object -> detail view
     obj = get_object_or_404(BlogPost, slug=slug)
-    template_name = 'blog_post_detail.html'
+    template_name = 'blog/detail.html'
     context = { 'object': obj }
     return render(request, template_name, context)
 
