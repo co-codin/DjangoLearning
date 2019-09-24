@@ -16,7 +16,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', home_page),
-    path('blog/<int:post_id>/', blog_post_detail_view),
+    path('blog/<str:post_id>/', blog_post_detail_view),
     re_path(r'^pages?/$', about_page),
     re_path(r'^about/$', about_page),
     path('example/', example_page),
