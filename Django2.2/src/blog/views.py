@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from .models import BlogPost
 
-from .forms import BlogPostForm
+from .forms import BlogPostModelForm
 
 def blog_post_list_view(request):
     # list out objects
@@ -16,13 +16,17 @@ def blog_post_create_view(request):
     # create objects
     # ? use a form
     # request.user -> return something
-    form = BlogPostForm(request.POST or None)
+    form = BlogPostModelForm(request.POST or None)
     if form.is_valid():
         print(form.cleaned_data)
         title = form.cleaned_data['title']
         # obj = BlogPost.objects.create(title=title)
-        BlogPost.objects.create(**form.cleaned_data)
-        form = BlogPostForm()
+        # BlogPost.objects.create(**form.cleaned_data)
+        # obj = form.save(commit=False)
+        # obj.title = form.cleaned_data.get('title') + '0'
+        # obj.save()
+        form.save()
+        form = BlogPostModelForm()
     template_name = 'form.html'
     context = { 'form': form }
     return render(request, template_name, context)
