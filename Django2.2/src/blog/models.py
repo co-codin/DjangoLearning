@@ -1,7 +1,10 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 User = settings.AUTH_USER_MODEL
+
+
 
 class BlogPost(models.Model):
     user = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL)
@@ -11,6 +14,9 @@ class BlogPost(models.Model):
     publish_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-publish_date', '-updated', '-timestamp']
     
     def get_absolute_url(self):
         return f"/blog/{self.slug}"
