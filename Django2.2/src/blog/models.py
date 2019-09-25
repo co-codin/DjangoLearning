@@ -4,10 +4,17 @@ from django.utils import timezone
 
 User = settings.AUTH_USER_MODEL
 
-class BlogPostManager(models.Manager):
+class BlogPostQuerySet(models.QuerySet):
     def published(self):
         now = timezone.now()
-        return self.get_queryset().filter(publish_date__lte=now)
+        return self.filter(publish_date__lte=now)
+
+class BlogPostManager(models.Manager):
+    def get_queryset(self):
+        return BlogPostQuerySet(self.model, using=self._db)
+    
+    def published(self):
+        return self.get_queryset().published()
     
 class BlogPost(models.Model):
     user = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL)
