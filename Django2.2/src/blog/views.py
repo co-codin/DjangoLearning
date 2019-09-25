@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import BlogPost
 from django.contrib.auth.decorators import login_required
@@ -10,7 +10,7 @@ def blog_post_list_view(request):
     # list out objects
     # could be search
     qs = BlogPost.objects.all()
-    template_name = 'blog_post_list.html'
+    template_name = 'blog/list.html'
     context = { 'object_list': qs }
     return render(request, template_name, context)
 
@@ -62,4 +62,5 @@ def blog_post_delete_view(request, slug):
     if request.method == "POST":
         obj.delete()
         return redirect("/blog")
+    context = {"object": obj}
     return render(request, template_name, context)
