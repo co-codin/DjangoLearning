@@ -11,6 +11,9 @@ def blog_post_list_view(request):
     # could be search
     # qs = BlogPost.objects.published()
     qs = BlogPost.objects.all().published()
+    if request.user.is_authenticated:
+        my_qs = BlogPost.objects.filter(user=request.user)
+        qs = (qs | my_qs).distinct()
     template_name = 'blog/list.html'
     context = { 'object_list': qs }
     return render(request, template_name, context)
