@@ -8,6 +8,6 @@ class ProductDetailView(DetailView):
     template_name = "products/product_detail.html"
 
 
-class ProductDetailView(ListView):
+class ProductListView(ListView):
     model = Product
     template_name = "products/product_list.html"
