@@ -30,4 +30,3 @@ class ArticleSerializer(serializers.Serializer):
         instance.save()
         return instance
 
-    def validate(self, data):
