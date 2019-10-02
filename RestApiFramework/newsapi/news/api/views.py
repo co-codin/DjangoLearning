@@ -1,5 +1,6 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from news.models import Article
@@ -43,3 +44,8 @@ def article_detail_api_view(request, pk):
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class ArticleListCreateAPIView(APIView):
+    pass
+
+class ArticleDetailAPIView(APIView):
+    pass
