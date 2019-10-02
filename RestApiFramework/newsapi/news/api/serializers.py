@@ -30,3 +30,18 @@ class ArticleSerializer(serializers.Serializer):
         instance.save()
         return instance
 
+    def validate(self, data):
+        """ check that description and title are different
+            https://www.django-rest-framework.org/api-guide/serializers/#object-level-validation
+        """
+        if data["title"] == data["description"]:
+            raise serializers.ValidationError("Title and Description must be different from one another!")
+        return data
+
+    def validate_title(self, value):
+        """ check that title is at least 30 chars long
+            https://www.django-rest-framework.org/api-guide/serializers/#field-level-validation
+        """
+        if len(value) < 30:
+            raise serializers.ValidationError("The title has to be at least 30 chars long!")
+        return value
