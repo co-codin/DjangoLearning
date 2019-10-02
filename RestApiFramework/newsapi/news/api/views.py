@@ -38,3 +38,8 @@ def article_detail_api_view(request, pk):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == "DELETE":
+        article.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
