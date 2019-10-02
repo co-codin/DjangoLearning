@@ -21,7 +21,8 @@ class ArticleSerializer(serializers.ModelSerializer):
         return time_delta
 
 class JournalistSerializer(serializers.ModelSerializer):
-    articles = ArticleSerializer(many=True, read_only=True)
+    articles = serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name="article-detail")
+    # articles = ArticleSerializer(many=True, read_only=True)
 
     class Meta:
         model = Journalist
