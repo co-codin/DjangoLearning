@@ -1,13 +1,17 @@
-from rest_framework import serializers
-from ebooks.models import Ebook, Review
+from rest_framework import generics
+from rest_framework import mixins
 
-class ReviewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Review
-        fields = "__all__"
+from ebooks.models import Ebook
+from ebooks.api.serializers import EbookSerializer
 
-class EbookSerializer(serializers.ModelSerializer):
-    reviews = ReviewSerializer(many=True, read_only=True)
-    class Meta:
-        model = Ebook
-        fields = "__all__"
+class EbookListCreateAPIView(mixins.ListModelMixin,
+                             mixins.CreateModelMixin,
+                             generics.GenericAPIView):
+    queryset = Ebook.objects.all()
+    serializer_class = EbookSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
