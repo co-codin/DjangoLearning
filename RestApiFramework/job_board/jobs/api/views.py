@@ -8,7 +8,7 @@ from jobs.api.serializers import JobOfferSerializer
 
 class JobOfferListCreateAPIView(APIView):
     def get(self, request):
-        jobs = Job.objects.filter(available=True)
+        jobs = JobOffer.objects.filter(available=True)
         serializer = JobOfferSerializer(jobs, many=True)
         return Response(serializer.data)
 
@@ -20,4 +20,24 @@ class JobOfferListCreateAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class JobOfferDetailAPIView(APIView):
-    pass
+    def get_object(self, pk):
+        job = get_object_or_404(JobOffer, pk=pk)
+        return job
+
+    def get(self, request, pk):
+        job = self.get_object(pk)
+        serializer = JobOfferSerializer(job)
+        return Response(serializer.data)
+
+    def update(self, request, pk):
+        job = self.get_object(pk)
+        serializer = JobOfferSerializer(job, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        job = self.get_object(pk)
+        job.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
