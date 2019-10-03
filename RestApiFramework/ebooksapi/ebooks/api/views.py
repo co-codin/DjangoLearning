@@ -1,8 +1,8 @@
 from rest_framework import generics
 from rest_framework import mixins
 
-from ebooks.models import Ebook
-from ebooks.api.serializers import EbookSerializer
+from ebooks.models import Ebook, Review
+from ebooks.api.serializers import EbookSerializer, ReviewSerializer
 
 class EbookListCreateAPIView(generics.ListCreateAPIView):
     queryset = Ebook.objects.all()
@@ -11,6 +11,18 @@ class EbookListCreateAPIView(generics.ListCreateAPIView):
 class EbookDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Ebook.objects.all()
     serializer_class = EbookSerializer
+
+class ReviewListCreate(generics.ListCreateAPIView):
+    Review = Ebook.objects.all()
+    serializer_class = ReviewSerializer
+
+class ReviewDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    Review = Ebook.objects.all()
+    serializer_class = ReviewSerializer
+
+    def perform_create(self, serializer):
+        pass
+
 
 # class EbookListCreateAPIView(mixins.ListModelMixin,
 #                              mixins.CreateModelMixin,
