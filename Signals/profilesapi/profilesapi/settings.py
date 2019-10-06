@@ -37,9 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'rest_framework',
     'rest_framework.authtoken',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 
     'rest_auth',
     'profiles'
@@ -134,3 +139,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication'
     ]
 }
+
+SITE_ID=1
+ACCOUNT_EMAIL_VERIFICATION="none"
+ACCOUNT_EMAIL_REQUIRED = (True)
