@@ -38,3 +38,16 @@ class ProfileViewSetTestCase(APITestCase):
         self.client.force_authenticate(user=None)
         response = self.client.get(self.list_url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_profile_detail_retrieve(self):
+        response = self.client.get(reverse('profile-detail', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(response.data['user'], 'davinci')
+
+    def test_profile_update_by_owner(self):
+        response = self.client.put(reverse('profile-detail', kwargs={"pk": 1}),
+                                   {"city": "Anchiano", "bio": "Renaissance Genius"})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(json.loads(response.content),
+                         {"id": 1, "user": "davinci", "bio": "Renaissance Genius",
+                          "city": "Anchiano", "avatar": None})
