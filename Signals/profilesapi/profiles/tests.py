@@ -51,3 +51,11 @@ class ProfileViewSetTestCase(APITestCase):
         self.assertEqual(json.loads(response.content),
                          {"id": 1, "user": "davinci", "bio": "Renaissance Genius",
                           "city": "Anchiano", "avatar": None})
+
+    def test_profile_update_by_random_user(self):
+        random_user = User.objects.create(username="random",
+                                          password="psw123123123")
+        self.client.force_authenticate(user=random_user)
+        response = self.client.put(reverse("profile-detail", kwargs={"pk": 1}),
+                                   {"bio": "hacked!!!"})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
