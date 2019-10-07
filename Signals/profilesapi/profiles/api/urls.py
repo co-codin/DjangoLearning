@@ -9,7 +9,7 @@ from profiles.api.views import (ProfileViewSet,
 
 router = DefaultRouter()
 router.register(r"profiles", ProfileViewSet)
-router.register(r"status", ProfileStatusViewSet)
+router.register(r"status", ProfileStatusViewSet, basename="status")
 
 
 urlpatterns = [
