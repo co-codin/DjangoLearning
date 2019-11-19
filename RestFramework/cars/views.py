@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
+from .serializers import CarDetailSerializer
 
 class CarCreateView(generics.CreateAPIView):
-    pass
+    serializer_class = CarDetailSerializer
