@@ -12,5 +12,6 @@ class CarsListView(generics.ListAPIView):
 
 
 class CarDetailView(generics.RetrieveUpdateDestroyAPIView):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     serializer_class = CarDetailSerializer
     queryset = Car.objects.all()
