@@ -4,6 +4,7 @@ from .models import Project, Category, Expense
 from django.utils.text import slugify
 from django.views.generic import CreateView
 from .forms import ExpenseForm
+import json
 
 def project_list(request):
     project_list = Project.objects.all()
@@ -37,7 +38,11 @@ def project_detail(request, project_slug):
             ).save()
 
     elif request.method == 'DELETE':
-        pass
+        id = json.loads(request.body)['id']
+        expense = get_object_or_404(Expense, id=id)
+        expense.delete()
+
+        return HttpResponse('')
 
     return HttpResponseRedirect(project_slug)
 
